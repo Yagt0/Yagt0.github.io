@@ -1,4 +1,4 @@
-# Portfolio d'Ewan Lefevre (Yagt0)
+# Portfolio (Yagt0)
 
 Portfolio professionnel pour le BTS SIO SISR (épreuve E5), destiné à GitHub Pages : https://yagt0.github.io
 
