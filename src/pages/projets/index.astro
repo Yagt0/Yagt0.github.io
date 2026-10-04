@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import Badge from '../../components/Badge.astro';
+import { realisations } from '../../data/realisations';
+---
+
+<Base title="Lab & Projets" description="Réalisations d'Ewan Lefevre : mission d'analyse de phishing chez SERVAIR, projet réseau HSP du BTS SIO et projet personnel PassForge.">
+  <div class="min-h-screen pt-32 pb-24 bg-background transition-colors duration-300">
+    <div class="container mx-auto px-6">
+      <PageHeader
+        icon="folder"
+        title="Lab & Projets"
+        subtitle="Mission professionnelle, projet BTS et projet perso. Chaque fiche sépare le réalisé du prévu, et le travail individuel du travail collectif."
+        code="git clone https://github.com/Yagt0"
+      />
+
+      <div class="max-w-4xl mx-auto mb-16 bg-white/90 dark:bg-[#1a1a1f]/90 backdrop-blur-md p-4 rounded-2xl border border-gray-200 dark:border-white/10 shadow-xl flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs text-gray-600 dark:text-gray-400">
+        <span class="font-bold uppercase tracking-wider text-gray-900 dark:text-white">Légende :</span>
+        <span class="flex items-center gap-2"><Badge kind="fait" /> terminé</span>
+        <span class="flex items-center gap-2"><Badge kind="en-cours" /> commencé</span>
+        <span class="flex items-center gap-2"><Badge kind="prevu" /> planifié, rien de déployé</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {realisations.map((item) => <ProjectCard item={item} />)}
+      </div>
+    </div>
+  </div>
+</Base>

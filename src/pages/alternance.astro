@@ -1,0 +1,129 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import Icon from '../components/Icon.astro';
+import Badge from '../components/Badge.astro';
+
+/* Chiffres publiés sur servair.fr (page « Qui sommes-nous »), consultée le 4 octobre 2026. */
+const figures = [
+  { value: '+110', label: 'compagnies aériennes', icon: 'plane' },
+  { value: '+10K', label: 'collaborateurs', icon: 'users' },
+  { value: '35', label: 'unités de production', icon: 'building' },
+  { value: '16', label: 'pays · ~20 aéroports', icon: 'globe' },
+];
+const activities = ['Restauration aérienne', 'Restauration commerciale', 'Restauration collective', 'Restauration ferroviaire', 'Management de base vie', 'Assistance aéroportuaire', 'Conseil'];
+const card = 'bg-surface dark:bg-[#1a1a1f] p-6 md:p-8 rounded-2xl border border-gray-200 dark:border-white/5 transition-all duration-300 shadow-sm dark:shadow-none';
+---
+
+<Base title="Entreprise & Alternance" description="Présentation de SERVAIR et de l'alternance d'Ewan Lefevre au siège de Tremblay-en-France, de septembre 2026 à août 2027.">
+  <div class="min-h-screen pt-32 pb-24 bg-background transition-colors duration-300">
+    <div class="container mx-auto px-6">
+      <PageHeader
+        icon="briefcase"
+        title="Alternance SERVAIR"
+        subtitle="Alternant en cybersécurité au siège de SERVAIR, à Tremblay-en-France, de septembre 2026 à août 2027, en parallèle de ma 2e année de BTS SIO SISR."
+        code="sept. 2026 → août 2027"
+      />
+
+      <section class="max-w-6xl mx-auto mb-24">
+        <SectionTitle title="L'entreprise" icon="plane" />
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+          <div class={`${card} lg:col-span-3 hover:border-cyan-500/30`} data-reveal>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2"><span class="w-1 h-6 bg-cyan-500 rounded-full"></span>SERVAIR</h3>
+            <div class="space-y-4 text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+              <p>
+                <strong class="text-gray-900 dark:text-white">SERVAIR</strong> est un acteur historique de la <strong class="text-cyan-700 dark:text-cyan-400">restauration aérienne</strong> en France. Depuis sa création en 1974, l'entreprise prépare et livre les repas servis à bord des avions, et a placé l'identité culinaire au cœur de sa stratégie avec de grands chefs.
+              </p>
+              <p>
+                En France, SERVAIR opère notamment sur les aéroports de <strong class="text-gray-900 dark:text-white">Paris-Charles de Gaulle</strong> et <strong class="text-gray-900 dark:text-white">Paris-Orly</strong>, ainsi qu'en outre-mer (Guadeloupe, Guyane, Martinique, Mayotte, La Réunion). Son siège est à Tremblay-en-France, près de Roissy.
+              </p>
+              <p>
+                Depuis 2017, SERVAIR fait partie du groupe international <strong class="text-blue-600 dark:text-blue-400">gategroup</strong>, dont elle est l'unité Europe du Sud et Afrique. Air France reste actionnaire de référence.
+              </p>
+            </div>
+            <p class="text-[9px] text-gray-400 uppercase font-bold tracking-widest mt-8 mb-3">Activités</p>
+            <div class="flex flex-wrap gap-2">
+              {activities.map((a) => <span class="text-[10px] uppercase font-bold tracking-wider bg-cyan-500/5 text-cyan-700 dark:text-cyan-300 px-2 py-1 rounded border border-cyan-500/10">{a}</span>)}
+            </div>
+          </div>
+
+          <div class="lg:col-span-2 flex flex-col gap-6" data-reveal>
+            <div class="p-6 bg-white rounded-2xl border border-gray-200 dark:border-white/10 grid place-items-center shadow-sm">
+              <img src="/images/logos/servair.webp" alt="Logo SERVAIR, a gategroup member" width="600" height="409" loading="lazy" class="max-w-[220px] w-full h-auto" />
+            </div>
+            <div class={`${card} hover:border-blue-500/30 flex-1`}>
+              <p class="flex items-center gap-2 text-xs font-bold text-cyan-700 dark:text-cyan-400 mb-5"><Icon name="info" class="w-4 h-4" />Périmètre SERVAIR, France + international</p>
+              <div class="grid grid-cols-2 gap-3">
+                {
+                  figures.map((f) => (
+                    <div class="rounded-xl border border-gray-100 dark:border-white/5 p-3 text-center bg-gray-50 dark:bg-black/30">
+                      <Icon name={f.icon as 'plane'} class="w-4 h-4 mx-auto mb-1.5 text-cyan-500" />
+                      <p class="text-xl font-black text-gray-900 dark:text-white">{f.value}</p>
+                      <p class="text-[9px] text-gray-400 uppercase font-bold tracking-wider">{f.label}</p>
+                    </div>
+                  ))
+                }
+              </div>
+              <p class="text-[10px] text-gray-500 mt-5 leading-relaxed">
+                Source : <a href="https://www.servair.fr/qui-sommes-nous/servair/" target="_blank" rel="noopener noreferrer" class="text-cyan-600 dark:text-cyan-400 underline underline-offset-2">servair.fr</a>, consulté le 4 octobre 2026. Le site ne publie pas de chiffres propres à la seule activité française.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="max-w-6xl mx-auto mb-24">
+        <SectionTitle title="Mon alternance" icon="briefcase" subtitle="Au siège, dans le domaine de la cybersécurité. Par confidentialité, je ne détaille ni l'organisation interne ni les équipes." />
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class={`${card} hover:border-cyan-500/30`} data-reveal>
+            <Icon name="calendar" class="w-8 h-8 text-cyan-500 mb-4" />
+            <h3 class="font-bold text-gray-900 dark:text-white mb-3">Cadre</h3>
+            <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+              <li class="flex gap-2"><span class="text-cyan-500">▹</span>Sept. 2026 → août 2027</li>
+              <li class="flex gap-2"><span class="text-cyan-500">▹</span>Siège, Tremblay-en-France</li>
+              <li class="flex gap-2"><span class="text-cyan-500">▹</span>BTS SIO SISR, 2<sup>e</sup> année</li>
+            </ul>
+          </div>
+          <div class={`${card} hover:border-blue-500/30`} data-reveal>
+            <Icon name="server" class="w-8 h-8 text-blue-500 mb-4" />
+            <h3 class="font-bold text-gray-900 dark:text-white mb-3">Outils manipulés</h3>
+            <div class="flex flex-wrap gap-2">
+              {['GitLab', 'Podman', 'IIS', 'AD CS', 'Python'].map((t) => <span class="text-[10px] uppercase font-bold tracking-wider bg-blue-500/5 text-blue-700 dark:text-blue-300 px-2 py-1 rounded border border-blue-500/10">{t}</span>)}
+            </div>
+          </div>
+          <div class={`${card} hover:border-green-500/30`} data-reveal>
+            <Icon name="clock" class="w-8 h-8 text-green-500 mb-4" />
+            <h3 class="font-bold text-gray-900 dark:text-white mb-3">Avant l'alternance</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">Stage de mai à juin 2026 en cybersécurité chez SERVAIR : tests d'intrusion sur le périmètre interne, audits, migration de postes et support.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="missions" class="max-w-6xl mx-auto">
+        <SectionTitle title="Missions professionnelles" icon="shield" subtitle="Les missions confiées pendant l'alternance, présentées sans aucune donnée interne." />
+        <a href="/missions/analyse-phishing/" data-reveal class="group relative flex flex-col md:flex-row gap-6 md:items-center bg-surface dark:bg-[#1a1a1f] p-6 md:p-8 rounded-2xl border border-gray-200 dark:border-white/5 hover:border-cyan-500/40 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(6,182,212,0.1)] transition-all duration-300 shadow-sm dark:shadow-none">
+          <div class="w-16 h-16 bg-cyan-500/10 rounded-2xl border border-cyan-500/20 grid place-items-center shrink-0 group-hover:scale-110 transition-transform">
+            <Icon name="shield" class="w-8 h-8 text-cyan-500" />
+          </div>
+          <div class="flex-1">
+            <div class="flex flex-wrap gap-2 mb-3">
+              <Badge kind="alternance" />
+              <Badge kind="fait" label="Script testé" />
+              <Badge kind="prevu" label="Power BI envisagé" />
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 dark:text-white group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors mb-2">Analyse d'une campagne de phishing</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-400">Analyse des données d'une campagne de sensibilisation, repérage des clics automatisés et script Python d'aide à l'analyse avec pseudonymisation.</p>
+          </div>
+          <span class="w-10 h-10 rounded-full bg-gray-100 dark:bg-white/5 grid place-items-center text-gray-400 dark:text-white group-hover:bg-cyan-600 group-hover:text-white transition-colors shrink-0">
+            <Icon name="arrowRight" class="w-5 h-5" />
+          </span>
+        </a>
+        <div class="flex gap-4 p-5 mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 text-sm text-gray-700 dark:text-gray-300" data-reveal>
+          <Icon name="lock" class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+          <p><strong class="text-gray-900 dark:text-white">Confidentialité.</strong> Aucun nom de salarié, aucune donnée individuelle, aucun export interne, aucune adresse IP ni aucun identifiant n'est publié.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</Base>

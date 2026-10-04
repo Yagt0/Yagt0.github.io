@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-label="Illustration neutre : un e-mail avec un hameçon, relié à des barres de statistiques">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1a24"/>
+      <stop offset="1" stop-color="#0a0a0f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.32" cy="0.45" r="0.5">
+      <stop offset="0" stop-color="#06b6d4" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#06b6d4" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#06b6d4" stroke-opacity="0.08"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect width="800" height="450" fill="url(#grid)"/>
+  <rect width="800" height="450" fill="url(#glow)"/>
+
+  <!-- Enveloppe -->
+  <g transform="translate(150 140)">
+    <rect width="230" height="160" rx="14" fill="#11202b" stroke="#22d3ee" stroke-width="3"/>
+    <path d="M8 14 115 92 222 14" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linejoin="round"/>
+    <!-- Hameçon -->
+    <path d="M190 -60v120a26 26 0 1 1-52 0" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-linecap="round"/>
+    <path d="M138 60l-10-14" stroke="#e2e8f0" stroke-width="5" stroke-linecap="round"/>
+    <line x1="190" y1="-60" x2="190" y2="-140" stroke="#64748b" stroke-width="2" stroke-dasharray="6 6"/>
+  </g>
+
+  <!-- Flux vers l'analyse -->
+  <path d="M400 220 C 450 220, 460 200, 500 200" fill="none" stroke="#06b6d4" stroke-opacity="0.6" stroke-width="2" stroke-dasharray="5 7"/>
+
+  <!-- Barres d'analyse -->
+  <g transform="translate(510 120)">
+    <rect width="170" height="200" rx="14" fill="#11202b" stroke="#1e3a47" stroke-width="2"/>
+    <rect x="22" y="130" width="22" height="48" rx="4" fill="#0e7490"/>
+    <rect x="56" y="96" width="22" height="82" rx="4" fill="#06b6d4"/>
+    <rect x="90" y="62" width="22" height="116" rx="4" fill="#22d3ee"/>
+    <rect x="124" y="112" width="22" height="66" rx="4" fill="#3b82f6"/>
+    <line x1="18" y1="182" x2="152" y2="182" stroke="#334155" stroke-width="2"/>
+    <circle cx="140" cy="34" r="12" fill="none" stroke="#fbbf24" stroke-width="3"/>
+    <path d="M140 27v8M140 39v1" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

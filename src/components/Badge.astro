@@ -1,0 +1,29 @@
+---
+/*
+  Étiquette d'état, au format des tags de la référence.
+  Sert partout à séparer le réalisé, l'en-cours et le prévu.
+*/
+type Kind = 'fait' | 'en-cours' | 'prevu' | 'propose' | 'consulte' | 'alternance' | 'scolaire' | 'perso' | 'neutre';
+
+interface Props {
+  kind: Kind;
+  label?: string;
+}
+
+const styles: Record<Kind, [string, string]> = {
+  fait: ['bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20', 'Réalisé'],
+  'en-cours': ['bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20', 'En cours'],
+  prevu: ['bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-white/10 border-dashed', 'Prévu'],
+  propose: ['bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-white/10 border-dashed', 'Proposé'],
+  consulte: ['bg-green-500/10 text-green-700 dark:text-green-400 border-green-500/20', 'Consulté'],
+  alternance: ['bg-cyan-500/10 text-cyan-700 dark:text-cyan-300 border-cyan-500/20', 'Mission pro'],
+  scolaire: ['bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/20', 'Projet BTS'],
+  perso: ['bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/20', 'Projet perso'],
+  neutre: ['bg-gray-100 dark:bg-black text-gray-600 dark:text-gray-500 border-gray-200 dark:border-white/5', ''],
+};
+
+const { kind, label } = Astro.props;
+const [cls, text] = styles[kind];
+---
+
+<span class={`inline-flex items-center gap-1.5 text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded border ${cls}`}>{label ?? text}</span>

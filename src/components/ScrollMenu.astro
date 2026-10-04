@@ -1,0 +1,53 @@
+---
+/* Menu latéral de défilement (accueil), comme sur la référence : pastilles rondes + étiquette au survol. */
+import Icon from './Icon.astro';
+
+interface Props {
+  items: { id: string; label: string; icon: string }[];
+}
+const { items } = Astro.props;
+---
+
+<div class="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-4" aria-label="Sections de la page">
+  {
+    items.map((item) => (
+      <a href={`#${item.id}`} data-scroll-link={item.id} class="group relative flex items-center justify-end" aria-label={item.label}>
+        <span
+          data-scroll-label
+          class="absolute right-10 px-2 py-1 rounded bg-white dark:bg-[#1a1a1f] border border-gray-200 dark:border-white/10 text-xs font-medium text-gray-800 dark:text-white transition-all duration-300 transform origin-right shadow-sm opacity-0 scale-90 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:scale-100 whitespace-nowrap pointer-events-none"
+        >
+          {item.label}
+        </span>
+        <span
+          data-scroll-dot
+          class="p-2 rounded-full border transition-all duration-300 bg-white/80 dark:bg-[#1a1a1f]/50 border-gray-200 dark:border-white/10 text-gray-500 hover:text-gray-900 dark:hover:text-white hover:border-cyan-500/50 hover:bg-white dark:hover:bg-[#1a1a1f]"
+        >
+          <Icon name={item.icon as 'home'} class="w-4 h-4" />
+        </span>
+      </a>
+    ))
+  }
+</div>
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-scroll-link]')];
+  const on = ['bg-cyan-600', 'border-cyan-500', 'text-white', 'shadow-lg', 'scale-110'];
+  const off = ['bg-white/80', 'dark:bg-[#1a1a1f]/50', 'border-gray-200', 'dark:border-white/10', 'text-gray-500'];
+  const setActive = (id: string) =>
+    links.forEach((l) => {
+      const a = l.dataset.scrollLink === id;
+      const dot = l.querySelector('[data-scroll-dot]')!;
+      const label = l.querySelector('[data-scroll-label]')!;
+      on.forEach((c) => dot.classList.toggle(c, a));
+      off.forEach((c) => dot.classList.toggle(c, !a));
+      ['opacity-100', 'scale-100', 'translate-x-0'].forEach((c) => label.classList.toggle(c, a));
+      a ? l.setAttribute('aria-current', 'location') : l.removeAttribute('aria-current');
+    });
+  const sections = links.map((l) => document.getElementById(l.dataset.scrollLink!)).filter(Boolean) as HTMLElement[];
+  const io = new IntersectionObserver(
+    (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+    { rootMargin: '-45% 0px -50% 0px' },
+  );
+  sections.forEach((s) => io.observe(s));
+  setActive(links[0]?.dataset.scrollLink ?? '');
+</script>

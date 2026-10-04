@@ -1,0 +1,154 @@
+---
+import Base from '../../layouts/Base.astro';
+import DetailHeader from '../../components/DetailHeader.astro';
+import Panel from '../../components/Panel.astro';
+import MiniCard from '../../components/MiniCard.astro';
+import Tabs from '../../components/Tabs.astro';
+import Badge from '../../components/Badge.astro';
+import Icon from '../../components/Icon.astro';
+
+const vlans = [
+  [10, 'SERVEURS'], [11, 'VISIO'], [12, 'LABO'], [13, 'OPHTALMO'], [14, 'ADMINISTRATIF'], [15, 'ANGIO'],
+  [16, 'PRATICIEN'], [17, 'PATIENT'], [18, 'VISITEUR'], [51, 'DMZ'], [100, 'WAN'],
+] as const;
+
+const done = [
+  'Mise en place de la maquette réseau sous Cisco Packet Tracer',
+  "Configuration du commutateur central et des commutateurs d'accès (Cisco 2960)",
+  'Création des VLAN',
+  "VTP : serveur sur le commutateur central, client sur l'accès",
+  'Liens trunk entre commutateurs',
+  'Interfaces VLAN (SVI), passerelles et routage inter-VLAN',
+  "Plan d'adressage IP et adressage des postes clients",
+  'Configuration des listes de contrôle d’accès (ACL)',
+];
+const planned = ['Windows Server', 'Active Directory', 'DNS', 'DHCP', 'Proxy', 'Pare-feu', 'DMZ', 'GLPI', 'Supervision', 'Environnement collaboratif'];
+const li = 'text-cyan-600 dark:text-cyan-400';
+---
+
+<Base title="Projet HSP : Réseau Hospitalier Sécurisé" description="Projet HSP du BTS SIO SISR : réseau interne sécurisé pour un scénario hospitalier. VLAN, VTP, trunk, routage inter-VLAN et ACL sous Cisco Packet Tracer. Rôle de Team Leader.">
+  <div class="min-h-screen pt-24 pb-20 bg-background transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-6 py-12">
+      <DetailHeader
+        back={{ href: '/projets/', label: 'Lab & Projets' }}
+        title="HSP : Réseau Hospitalier Sécurisé"
+        subtitle="« Mise en œuvre d'un réseau interne sécurisé ainsi que des outils de contrôle et de travail collaboratif »"
+      >
+        <Badge kind="scolaire" />
+        <Badge kind="en-cours" label="Projet en cours" />
+        <Badge kind="neutre" label="Groupe de 4" />
+        <Badge kind="neutre" label="Team Leader" />
+      </DetailHeader>
+
+      <Panel class="mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <Icon name="server" class="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Pourquoi ce projet ?</h2>
+        </div>
+        <div class="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p>
+            HSP est mon principal projet de BTS pour l'épreuve E5. En groupe de quatre, nous concevons l'infrastructure d'un
+            <strong class="text-gray-900 dark:text-white">hôpital fictif</strong> : laboratoire, ophtalmologie, administratif, praticiens, patients et visiteurs partagent le même réseau, mais ne doivent pas avoir les mêmes accès.
+          </p>
+          <p>
+            L'objectif : un réseau interne <strong class="text-gray-900 dark:text-white">segmenté et sécurisé</strong>, puis les services d'infrastructure, les outils de contrôle et un environnement de travail collaboratif. Le projet est toujours en cours.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          <MiniCard title="Mon rôle" icon="flag">
+            Team Leader : organisation, répartition et suivi des tâches, tout en réalisant des configurations techniques.
+          </MiniCard>
+          <MiniCard title="Ma part" icon="user">
+            <ul>
+              <li><span class={li}>▹</span>Planning sous GanttProject</li>
+              <li><span class={li}>▹</span>Configuration réseau sous Packet Tracer</li>
+              <li><span class={li}>▹</span>Tests de connectivité et d'ACL</li>
+            </ul>
+          </MiniCard>
+          <MiniCard title="Collectif" icon="users">
+            Le projet reste un travail d'équipe : la maquette sert de base commune et les étapes à venir seront réparties dans le groupe.
+          </MiniCard>
+        </div>
+      </Panel>
+
+      <Tabs
+        id="hsp"
+        tabs={[
+          { slot: 'architecture', label: 'Architecture', icon: 'network' },
+          { slot: 'configuration', label: 'Configuration', icon: 'wrench' },
+          { slot: 'tests', label: 'Tests', icon: 'search' },
+          { slot: 'suite', label: 'Prochaines étapes', icon: 'clock' },
+        ]}
+      >
+        <div slot="architecture">
+          <Panel title="Architecture cible" icon="network">
+            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">
+              Le schéma présente l'architecture <strong class="text-gray-900 dark:text-white">cible</strong>. La partie réseau est en place dans la maquette ; la salle serveur, la DMZ et le proxy sont des étapes prévues, pas encore déployées.
+            </p>
+            <a href="/images/projets/hsp-architecture.webp" target="_blank" rel="noopener" class="block bg-white rounded-lg p-3 border border-gray-200 dark:border-white/10 cursor-zoom-in">
+              <img src="/images/projets/hsp-architecture.webp" width="1412" height="998" loading="lazy" alt="Schéma du réseau de l'hôpital HSP : VLAN des services reliés par des commutateurs 2960 à un commutateur central, VLAN serveurs, DMZ avec serveurs web et e-mail, serveur proxy et routeur vers le WAN." class="w-full h-auto" />
+            </a>
+            <p class="text-xs text-gray-500 mt-3">Schéma du projet. Cliquer pour agrandir.</p>
+          </Panel>
+          <Panel title="VLAN de la maquette" icon="layers">
+            <ul class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {
+                vlans.map(([id, name]) => (
+                  <li class="flex items-center gap-3 bg-gray-50 dark:bg-[#2a2a2f] p-3 rounded-lg">
+                    <span class="font-mono font-bold text-sm text-cyan-600 dark:text-cyan-400 min-w-8">{id}</span>
+                    <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 truncate">{name}</span>
+                  </li>
+                ))
+              }
+            </ul>
+          </Panel>
+        </div>
+
+        <div slot="configuration">
+          <Panel title="Configurations réalisées" icon="wrench">
+            <div class="mb-4"><Badge kind="fait" /></div>
+            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+              {done.map((d) => <li class="flex items-start gap-2"><Icon name="check" class="w-4 h-4 text-green-500 mt-1 shrink-0" />{d}</li>)}
+            </ul>
+          </Panel>
+          <Panel title="Choix techniques" icon="sparkles">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <MiniCard title="Un VLAN par service" icon="layers">Les flux sont séparés : un incident sur un segment, par exemple le réseau visiteurs, ne touche pas directement les autres.</MiniCard>
+              <MiniCard title="VTP et trunk" icon="network">Les VLAN sont déclarés une fois sur le commutateur central et propagés vers l'accès ; les trunks les transportent entre commutateurs.</MiniCard>
+              <MiniCard title="Routage centralisé" icon="server">Les interfaces VLAN du commutateur central servent de passerelles : un point unique, plus simple à contrôler.</MiniCard>
+              <MiniCard title="Filtrage ACL" icon="shield">Les ACL limitent les échanges entre VLAN aux flux nécessaires.</MiniCard>
+            </div>
+          </Panel>
+        </div>
+
+        <div slot="tests">
+          <Panel title="Tests" icon="search">
+            <div class="mb-4"><Badge kind="fait" /></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <MiniCard title="Connectivité inter-VLAN" icon="network">Vérification que les postes des différents VLAN communiquent via le routage inter-VLAN.</MiniCard>
+              <MiniCard title="ACL" icon="shield">Vérification des flux autorisés et des flux filtrés après application des ACL.</MiniCard>
+            </div>
+          </Panel>
+          <Panel title="Outils & compétences" icon="graduation">
+            <div class="flex flex-wrap gap-2 mb-4">
+              {['Cisco Packet Tracer', 'GanttProject'].map((t) => <span class="text-[10px] uppercase font-bold tracking-wider bg-cyan-500/5 text-cyan-700 dark:text-cyan-300 px-2 py-1 rounded border border-cyan-500/10">{t}</span>)}
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {['Segmentation VLAN', 'Routage inter-VLAN', 'Filtrage ACL', "Plan d'adressage", 'Tests de connectivité', 'Gestion de projet', "Travail d'équipe"].map((t) => <Badge kind="neutre" label={t} />)}
+            </div>
+          </Panel>
+        </div>
+
+        <div slot="suite">
+          <Panel title="Prochaines étapes" icon="clock">
+            <div class="mb-4"><Badge kind="prevu" /></div>
+            <p class="text-gray-600 dark:text-gray-400 text-sm mb-6">Éléments prévus dans le projet, <strong class="text-gray-900 dark:text-white">non déployés à ce jour</strong> :</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {planned.map((p) => <div class="text-sm text-gray-600 dark:text-gray-400 border border-dashed border-gray-300 dark:border-white/15 rounded-lg px-3 py-2 flex items-center gap-2"><Icon name="clock" class="w-3.5 h-3.5 text-gray-400 shrink-0" />{p}</div>)}
+            </div>
+          </Panel>
+        </div>
+      </Tabs>
+    </div>
+  </div>
+</Base>

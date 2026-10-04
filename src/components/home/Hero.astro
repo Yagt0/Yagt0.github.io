@@ -1,0 +1,148 @@
+---
+import Icon from '../Icon.astro';
+
+const tiles = [
+  { href: '/missions/analyse-phishing/', icon: 'shield', title: 'Mission Phishing', sub: 'Alternance chez SERVAIR.', color: 'cyan' },
+  { href: '/projets/hsp/', icon: 'database', title: 'Projet HSP', sub: 'Réseau hospitalier sécurisé.', color: 'blue' },
+  { href: '/projets/passforge/', icon: 'terminal', title: 'PassForge', sub: 'Outil Python en terminal.', color: 'featured', badge: 'Perso' },
+  { href: '/veille/', icon: 'book', title: 'Veille Techno', sub: 'Sécurité des infrastructures.', color: 'green' },
+] as const;
+
+const tileCls = {
+  cyan: ['hover:border-cyan-500/40', 'bg-cyan-500/10', 'text-cyan-600 dark:text-cyan-400', 'group-hover:text-cyan-700 dark:group-hover:text-cyan-300'],
+  blue: ['hover:border-blue-500/40', 'bg-blue-500/10', 'text-blue-600 dark:text-blue-400', 'group-hover:text-blue-700 dark:group-hover:text-blue-300'],
+  featured: ['border-cyan-500/20 hover:border-cyan-500/50', 'bg-cyan-500/15', 'text-cyan-500 dark:text-cyan-400', 'group-hover:text-cyan-600 dark:group-hover:text-cyan-300'],
+  green: ['hover:border-green-500/40', 'bg-green-500/10', 'text-green-600 dark:text-green-400', 'group-hover:text-green-700 dark:group-hover:text-green-300'],
+};
+
+const stack = [
+  { icon: 'terminal', label: 'Bash' },
+  { icon: 'code', label: 'Python' },
+  { icon: 'network', label: 'Cisco IOS' },
+  { icon: 'server', label: 'Windows Server' },
+  { icon: 'bug', label: 'Kali' },
+];
+---
+
+<section id="home" class="pt-28 pb-12 md:pt-32 md:pb-20 relative overflow-hidden min-h-[100dvh] flex flex-col justify-center bg-background transition-colors duration-300">
+  <div class="absolute inset-0 z-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(6,182,212,0.08),transparent_60%)]"></div>
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+  </div>
+
+  <div class="container mx-auto px-4 relative z-10 flex-1 flex flex-col justify-center">
+    <div class="max-w-5xl mx-auto w-full">
+      <div class="text-center mb-8 md:mb-12">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-700 dark:text-cyan-300 text-[10px] sm:text-xs font-bold mb-4 md:mb-6 animate-fade-in-up hover:bg-cyan-500/20 transition-colors cursor-default">
+          <span class="relative flex h-1.5 w-1.5 md:h-2 md:w-2">
+            <span class="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-1.5 w-1.5 md:h-2 md:w-2 bg-green-500"></span>
+          </span>
+          Alternant chez SERVAIR
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl md:text-8xl font-bold mb-4 md:mb-8 tracking-tighter">
+          <span class="sr-only">Ewan Lefevre</span>
+          <span
+            aria-hidden="true"
+            data-scramble="Ewan Lefevre"
+            class="bg-gradient-to-r from-gray-900 via-cyan-700 to-cyan-500 dark:from-white dark:via-cyan-200 dark:to-cyan-400 bg-clip-text text-transparent cursor-default"
+            >Ewan Lefevre</span
+          >
+        </h1>
+
+        <p class="text-base sm:text-xl md:text-2xl text-gray-700 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed px-2">
+          Étudiant BTS SIO SISR, alternant en cybersécurité, <span class="text-cyan-700 dark:text-cyan-400 font-bold">futur pentester</span>.
+          <span class="block mt-2 text-sm md:text-lg">
+            Réseau • Systèmes • <span class="text-gray-900 dark:text-white border-b-2 border-cyan-500/50">Sécurité offensive</span>
+          </span>
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
+        {
+          tiles.map((t) => {
+            const [border, iconBg, iconColor, hoverTitle] = tileCls[t.color];
+            return (
+              <a
+                href={t.href}
+                class={`group bg-surface/80 dark:bg-[#1a1a1f]/80 backdrop-blur-sm p-4 md:p-5 rounded-xl md:rounded-2xl border border-gray-200 dark:border-white/5 ${border} transition-all flex flex-col gap-3 hover:-translate-y-1 duration-300 shadow-sm dark:shadow-none relative overflow-hidden`}
+              >
+                <div class="relative flex items-start justify-between">
+                  <div class={`w-10 h-10 ${iconBg} rounded-lg md:rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                    <Icon name={t.icon} class={`w-5 h-5 ${iconColor}`} />
+                  </div>
+                  {'badge' in t && (
+                    <span class="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-500 dark:text-cyan-400 border border-cyan-500/30">{t.badge}</span>
+                  )}
+                </div>
+                <div class="relative text-left">
+                  <h2 class={`text-sm md:text-base font-bold text-gray-900 dark:text-white mb-0.5 md:mb-1 ${hoverTitle} transition-colors`}>{t.title}</h2>
+                  <p class="text-gray-600 dark:text-gray-400 text-xs">{t.sub}</p>
+                </div>
+              </a>
+            );
+          })
+        }
+      </div>
+
+      <div class="flex flex-col lg:flex-row items-center justify-between gap-6 bg-surface/50 dark:bg-[#1a1a1f]/50 p-4 rounded-2xl border border-gray-200 dark:border-white/5 backdrop-blur-md shadow-sm dark:shadow-none">
+        <a
+          href="/parcours/"
+          class="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl flex items-center justify-center gap-2 text-sm hover:shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all active:scale-95"
+        >
+          <span>Découvrir mon parcours</span>
+          <Icon name="activity" class="w-4 h-4" />
+        </a>
+        <div class="w-full lg:w-auto overflow-x-auto pb-2 lg:pb-0 hide-scrollbar">
+          <div class="flex items-center gap-4 px-2 min-w-max">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-600 dark:text-gray-500 hidden lg:inline">Stack :</span>
+            {
+              stack.map((s) => (
+                <div class="flex items-center gap-1.5 text-gray-700 dark:text-gray-300 hover:text-cyan-700 dark:hover:text-white transition-colors cursor-default bg-gray-200/50 dark:bg-white/5 px-2 py-1 rounded-md border border-gray-300 dark:border-white/5 hover:border-cyan-500/30">
+                  <Icon name={s.icon as 'code'} size={14} />
+                  <span class="text-[10px] font-bold">{s.label}</span>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center w-full mt-8 mb-8">
+        <a href="#stats" class="flex flex-col items-center gap-1.5 text-gray-400 dark:text-gray-600 motion-safe:animate-bounce select-none" aria-label="Défiler vers la suite">
+          <span class="text-[9px] uppercase tracking-[0.2em] font-bold">Scroll</span>
+          <Icon name="chevronDown" size={16} />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Effet de « brouillage » du nom, comme la référence (rejoué au survol)
+  const el = document.querySelector<HTMLElement>('[data-scramble]');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (el && !reduce) {
+    const text = el.dataset.scramble!;
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&';
+    let timer: number | undefined;
+    const run = () => {
+      window.clearInterval(timer);
+      let i = 0;
+      timer = window.setInterval(() => {
+        el.textContent = text
+          .split('')
+          .map((c, k) => (k < i || c === ' ' ? c : chars[Math.floor(Math.random() * chars.length)]))
+          .join('');
+        i += 1 / 3;
+        if (i >= text.length) {
+          window.clearInterval(timer);
+          el.textContent = text;
+        }
+      }, 30);
+    };
+    run();
+    el.addEventListener('mouseenter', run);
+  }
+</script>

@@ -1,0 +1,145 @@
+---
+/* Section « Contact & Connexion », identique à la référence (deux cartes). */
+import Icon from '../Icon.astro';
+import { profile, links } from '../../data/site';
+
+interface Props {
+  asPage?: boolean;
+}
+const { asPage = false } = Astro.props;
+const Title = asPage ? 'h1' : 'h2';
+---
+
+<section id="contact" class:list={['relative bg-background transition-colors duration-300 overflow-hidden scroll-mt-16', asPage ? 'pt-32 pb-24' : 'py-24']}>
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="text-center mb-16" data-reveal>
+      <Title class="text-3xl md:text-4xl font-bold mb-4 flex items-center justify-center gap-3">
+        <span class="p-3 bg-surface dark:bg-[#1a1a1f] rounded-xl border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none">
+          <Icon name="mail" class="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
+        </span>
+        <span class="text-gray-900 dark:text-white">Contact & Connexion</span>
+      </Title>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Alternance, réseau ou pentest ? Discutons technique, opportunités ou simplement de Root-Me.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div data-reveal class="h-full bg-surface dark:bg-[#1a1a1f] p-6 md:p-8 rounded-2xl border border-gray-200 dark:border-white/5 hover:border-cyan-500/30 transition-all duration-300 shadow-sm dark:shadow-none">
+        <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-2">
+          <span class="w-1 h-6 bg-cyan-500 rounded-full"></span>
+          Me contacter
+        </h3>
+        <div class="space-y-6">
+          <a href={`mailto:${profile.email}`} class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-black border border-gray-200 dark:border-white/5 hover:border-cyan-500/20 transition-all group/item">
+            <div class="p-3 bg-white dark:bg-[#1a1a1f] rounded-lg text-cyan-600 dark:text-cyan-400 group-hover/item:text-cyan-700 dark:group-hover/item:text-white transition-colors border border-gray-100 dark:border-transparent">
+              <Icon name="mail" class="w-6 h-6" />
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Email</p>
+              <p class="text-gray-900 dark:text-white font-medium group-hover/item:text-cyan-600 dark:group-hover/item:text-cyan-300 transition-colors break-all">{profile.email}</p>
+            </div>
+          </a>
+          <a href={links.linkedin} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-black border border-gray-200 dark:border-white/5 hover:border-blue-500/20 transition-all group/item">
+            <div class="p-3 bg-white dark:bg-[#1a1a1f] rounded-lg text-blue-600 dark:text-blue-400 group-hover/item:text-blue-700 dark:group-hover/item:text-white transition-colors border border-gray-100 dark:border-transparent">
+              <Icon name="linkedin" class="w-6 h-6" />
+            </div>
+            <div>
+              <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">LinkedIn</p>
+              <p class="text-gray-900 dark:text-white font-medium group-hover/item:text-blue-600 dark:group-hover/item:text-blue-300 transition-colors">Ewan Lefevre</p>
+            </div>
+          </a>
+          {
+            links.discord ? (
+              <a href={links.discord} target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-black border border-gray-200 dark:border-white/5 hover:border-indigo-500/20 transition-all group/item">
+                <div class="p-3 bg-white dark:bg-[#1a1a1f] rounded-lg text-indigo-500 border border-gray-100 dark:border-transparent">
+                  <Icon name="discord" class="w-6 h-6" />
+                </div>
+                <div>
+                  <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Discord</p>
+                  <p class="text-gray-900 dark:text-white font-medium">{profile.discordId}</p>
+                </div>
+              </a>
+            ) : (
+              <div class="flex items-center gap-4 p-4 rounded-xl bg-gray-50 dark:bg-black border border-gray-200 dark:border-white/5">
+                <div class="p-3 bg-white dark:bg-[#1a1a1f] rounded-lg text-indigo-500 dark:text-indigo-400 border border-gray-100 dark:border-transparent">
+                  <Icon name="discord" class="w-6 h-6" />
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">Discord</p>
+                  <p class="text-gray-900 dark:text-white font-medium">{profile.discordId}</p>
+                </div>
+                <button type="button" data-copy={profile.discordId} class="text-xs font-bold px-3 py-2 rounded-lg border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-300 hover:border-cyan-500/50 hover:text-cyan-500 transition-colors flex items-center gap-1.5">
+                  <Icon name="copy" class="w-3.5 h-3.5" />
+                  <span data-copy-label>Copier</span>
+                </button>
+              </div>
+            )
+          }
+        </div>
+      </div>
+
+      <div data-reveal class="h-full bg-surface dark:bg-[#1a1a1f] p-6 md:p-8 rounded-2xl border border-gray-200 dark:border-white/5 hover:border-blue-500/30 transition-all duration-300 flex flex-col justify-between shadow-sm dark:shadow-none">
+        <div>
+          <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-2">
+            <span class="w-1 h-6 bg-blue-500 rounded-full"></span>
+            Statut Professionnel
+          </h3>
+          <div class="bg-gray-50 dark:bg-black p-6 rounded-xl border border-gray-200 dark:border-white/5 mb-8">
+            <div class="flex items-start gap-4">
+              <div class="p-3 bg-white rounded-lg shadow-lg border border-gray-100 shrink-0">
+                <Icon name="building" class="w-6 h-6 text-cyan-900" />
+              </div>
+              <div>
+                <h4 class="font-bold text-gray-900 dark:text-white text-lg">Alternant chez SERVAIR</h4>
+                <p class="text-blue-600 dark:text-blue-300 text-sm font-medium mb-3">Cybersécurité · Sept. 2026 - Août 2027</p>
+                <div class="flex items-center gap-2 text-green-700 dark:text-green-400 text-xs font-semibold bg-green-100 dark:bg-green-400/10 w-fit px-2 py-1 rounded-full border border-green-200 dark:border-green-400/20">
+                  <span class="relative flex h-2 w-2">
+                    <span class="motion-safe:animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-green-600 dark:bg-green-500"></span>
+                  </span>
+                  En alternance, BTS SIO SISR 2<sup>e</sup> année
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="space-y-3 mb-8">
+            <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+              Après le BTS, je vise une poursuite d'études en cybersécurité. Je reste <strong class="text-gray-900 dark:text-white">toujours ouvert</strong> pour :
+            </p>
+            <ul class="space-y-2">
+              {
+                ['Échanger sur le réseau, le pentest et les CTF', 'Partager des ressources et de la veille', 'Étendre mon réseau professionnel'].map((t) => (
+                  <li class="flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300">
+                    <Icon name="check" class="w-4 h-4 text-cyan-600 dark:text-cyan-500 shrink-0" />
+                    {t}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+        <a href={profile.cv} download class="w-full group relative overflow-hidden bg-gray-900 dark:bg-white text-white dark:text-black py-4 px-6 rounded-xl font-bold transition-all hover:scale-[1.02] active:scale-[0.98] shadow-lg flex items-center justify-center gap-3">
+          <Icon name="fileText" class="w-5 h-5" />
+          <span>Télécharger mon CV (PDF)</span>
+          <Icon name="download" class="w-4 h-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all text-cyan-300 dark:text-cyan-600" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) =>
+    btn.addEventListener('click', async () => {
+      const label = btn.querySelector('[data-copy-label]');
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy ?? '');
+        if (label) label.textContent = 'Copié !';
+      } catch {
+        if (label) label.textContent = 'Échec';
+      }
+      setTimeout(() => label && (label.textContent = 'Copier'), 1800);
+    }),
+  );
+</script>

@@ -1,0 +1,46 @@
+---
+/*
+  Onglets des fiches détaillées (comme « Architecture / Installation / … » sur la référence).
+  Chaque panneau est un <div slot="nom-du-slot">. Sans JavaScript, tous les panneaux restent visibles.
+*/
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+  tabs: { slot: string; label: string; icon: string }[];
+}
+const { id, tabs } = Astro.props;
+const panels = await Promise.all(tabs.map((t) => Astro.slots.render(t.slot)));
+---
+
+<div data-tabs>
+  <div role="tablist" aria-label="Sections du projet" class="flex gap-3 mb-8 overflow-x-auto pb-2 hide-scrollbar">
+    {
+      tabs.map((t, i) => (
+        <button
+          type="button"
+          role="tab"
+          id={`${id}-tab-${t.slot}`}
+          aria-controls={`${id}-panel-${t.slot}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          class:list={[
+            'px-4 py-2 rounded-lg transition-colors whitespace-nowrap text-sm font-medium flex items-center gap-2 hover:bg-cyan-500/20',
+            i === 0 ? 'bg-cyan-500 text-white' : 'bg-gray-100 dark:bg-[#2a2a2f] text-gray-600 dark:text-gray-400',
+          ]}
+        >
+          <Icon name={t.icon as 'home'} class="w-4 h-4" />
+          {t.label}
+        </button>
+      ))
+    }
+  </div>
+  <div class="space-y-12">
+    {
+      tabs.map((t, i) => (
+        <section id={`${id}-panel-${t.slot}`} role="tabpanel" aria-labelledby={`${id}-tab-${t.slot}`} tabindex="0" class="space-y-8 focus:outline-none">
+          <Fragment set:html={panels[i]} />
+        </section>
+      ))
+    }
+  </div>
+</div>
