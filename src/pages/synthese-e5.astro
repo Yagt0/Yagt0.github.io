@@ -14,7 +14,7 @@ const rows = [
 const card = 'bg-surface dark:bg-[#1a1a1f] p-6 rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-none';
 ---
 
-<Base title="Synthèse E5" description="Épreuve E5 du BTS SIO SISR : réalisations présentées, emplacement du tableau de synthèse officiel et présentation du portfolio d'Ewan Lefevre.">
+<Base title="Synthèse E5" description="Épreuve E5 du BTS SIO SISR : réalisations présentées, tableau de synthèse officiel (PDF) et présentation du portfolio d'Ewan Lefevre.">
   <div class="min-h-screen pt-32 pb-24 bg-background transition-colors duration-300">
     <div class="container mx-auto px-6">
       <PageHeader icon="table" title="Synthèse E5" subtitle="Les réalisations présentées pour l'épreuve E5 du BTS SIO SISR, le tableau de synthèse officiel et la présentation de ce portfolio." />
@@ -48,11 +48,16 @@ const card = 'bg-surface dark:bg-[#1a1a1f] p-6 rounded-2xl border border-gray-20
         <SectionTitle title="Tableau de synthèse" icon="fileText" />
         {
           links.e5Table ? (
-            <div class={`${card} flex flex-col md:flex-row items-center justify-between gap-4`} data-reveal>
-              <p class="text-gray-700 dark:text-gray-300">Le tableau de synthèse officiel est disponible au format PDF.</p>
-              <a href={links.e5Table} download class="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl flex items-center gap-2 text-sm">
-                <Icon name="download" class="w-4 h-4" /> Télécharger le tableau (PDF)
-              </a>
+            <div class="space-y-4" data-reveal>
+              <div class={`${card} flex flex-col md:flex-row items-center justify-between gap-4`}>
+                <p class="text-gray-700 dark:text-gray-300">Tableau de synthèse des réalisations professionnelles, session 2026, au format PDF.</p>
+                <a href={links.e5Table} download class="px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-bold rounded-xl flex items-center gap-2 text-sm shrink-0">
+                  <Icon name="download" class="w-4 h-4" /> Télécharger le tableau (PDF)
+                </a>
+              </div>
+              <object data={`${links.e5Table}#view=FitH`} type="application/pdf" class="hidden md:block w-full h-[900px] rounded-2xl border border-gray-200 dark:border-white/5 bg-white" aria-label="Tableau de synthèse E5 (PDF)">
+                <p class="p-4 text-sm text-gray-600 dark:text-gray-400">Aperçu indisponible : <a href={links.e5Table} class="text-cyan-500 underline">ouvrir le PDF</a>.</p>
+              </object>
             </div>
           ) : (
             <div data-reveal class="flex flex-col sm:flex-row gap-5 p-8 rounded-2xl border-2 border-dashed border-gray-300 dark:border-white/10 bg-surface/50 dark:bg-[#1a1a1f]/50">

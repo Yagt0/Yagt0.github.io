@@ -31,7 +31,7 @@ export const links = {
   passforgeRepo: null as string | null,
   /* Tableau de synthèse E5 officiel, une fois rempli : déposer le PDF dans public/docs/ puis indiquer son chemin,
      par exemple '/docs/tableau-synthese-e5.pdf'. */
-  e5Table: null as string | null,
+  e5Table: '/docs/tableau-synthese-e5.pdf' as string | null,
 };
 
 /* Navigation principale (ordre d'affichage dans l'en-tête et le menu mobile). */
