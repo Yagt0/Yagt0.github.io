@@ -1,0 +1,144 @@
+---
+import Base from '../../layouts/Base.astro';
+import DetailHeader from '../../components/DetailHeader.astro';
+import Panel from '../../components/Panel.astro';
+import MiniCard from '../../components/MiniCard.astro';
+import Tabs from '../../components/Tabs.astro';
+import Badge from '../../components/Badge.astro';
+import Icon from '../../components/Icon.astro';
+
+const steps = [
+  ['Prise en main des données', 'Analyse des données brutes de la campagne et des données nettoyées.', 'fait'],
+  ['Pseudonymisation', "Remplacement des identités des utilisateurs par des identifiants pseudonymes dans le script d'analyse.", 'fait'],
+  ['Étude des clics', 'Clics et caractéristiques : horodatages, adresses IP, navigateurs et systèmes.', 'fait'],
+  ['Comportements automatisés', 'Recherche de clics potentiellement non humains en croisant plusieurs indicateurs.', 'fait'],
+  ['Résultats et rapport', 'Génération de fichiers de résultats et d’un rapport, vérification et documentation du script.', 'fait'],
+  ['Reporting Power BI', 'Tableau de bord de suivi des campagnes. Envisagé, non réalisé à ce jour.', 'prevu'],
+] as const;
+
+/* Données entièrement fictives, pour illustrer la forme d'une sortie pseudonymisée. */
+const sample = [
+  ['U-0142', '09:12:05', 'Navigateur de bureau', 'Humain probable', 'ok'],
+  ['U-0217', '09:12:06', 'Client non identifié', 'À vérifier', 'warn'],
+  ['U-0217', '09:12:06', 'Client non identifié', 'À vérifier', 'warn'],
+  ['U-0388', '10:47:31', 'Navigateur mobile', 'Humain probable', 'ok'],
+];
+const li = 'text-cyan-600 dark:text-cyan-400';
+---
+
+<Base title="Mission : analyse d'une campagne de phishing" description="Mission professionnelle d'Ewan Lefevre chez SERVAIR : analyse des données d'une campagne de sensibilisation au phishing et script Python d'aide à l'analyse avec pseudonymisation.">
+  <div class="min-h-screen pt-24 pb-20 bg-background transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-6 py-12">
+      <DetailHeader back={{ href: '/alternance/', label: 'Entreprise & Alternance' }} title="Analyse de Campagne Phishing" subtitle="Mission professionnelle en alternance chez SERVAIR">
+        <Badge kind="alternance" />
+        <Badge kind="fait" label="Script testé" />
+        <Badge kind="prevu" label="Power BI envisagé" />
+      </DetailHeader>
+
+      <Panel class="mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <Icon name="shield" class="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Pourquoi cette mission ?</h2>
+        </div>
+        <div class="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p>
+            Une <strong class="text-gray-900 dark:text-white">campagne de sensibilisation au phishing</strong> a été menée dans l'entreprise. Pendant mon alternance, j'ai analysé ses données et préparé l'automatisation de leur traitement à l'aide d'un <strong class="text-gray-900 dark:text-white">script Python</strong>.
+          </p>
+          <p>
+            Dans une simulation, tous les clics ne viennent pas d'une personne : des outils de sécurité qui analysent les liens reçus par e-mail peuvent cliquer avant le destinataire. Les compter comme des erreurs humaines fausserait les résultats.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          <MiniCard title="Objectifs" icon="target">
+            <ul>
+              <li><span class={li}>▹</span>Exploiter les données de façon fiable</li>
+              <li><span class={li}>▹</span>Distinguer clics humains et automatisés</li>
+              <li><span class={li}>▹</span>Préparer le futur reporting</li>
+            </ul>
+          </MiniCard>
+          <MiniCard title="Ma contribution" icon="user">
+            <ul>
+              <li><span class={li}>▹</span>Analyse des données</li>
+              <li><span class={li}>▹</span>Écriture du script</li>
+              <li><span class={li}>▹</span>Vérification et documentation</li>
+            </ul>
+          </MiniCard>
+          <MiniCard title="Résultat" icon="check">Script exécuté et testé. Une validation humaine reste nécessaire pour limiter les faux positifs.</MiniCard>
+        </div>
+      </Panel>
+
+      <Tabs
+        id="phishing"
+        tabs={[
+          { slot: 'demarche', label: 'Démarche', icon: 'layers' },
+          { slot: 'illustration', label: 'Illustration', icon: 'table' },
+          { slot: 'bilan', label: 'Outils & compétences', icon: 'graduation' },
+        ]}
+      >
+        <div slot="demarche">
+          <Panel title="Étapes du traitement" icon="layers">
+            <ol class="space-y-4">
+              {
+                steps.map(([title, text, status], i) => (
+                  <li class={`flex gap-4 p-4 rounded-lg ${status === 'prevu' ? 'border border-dashed border-gray-300 dark:border-white/15' : 'bg-gray-50 dark:bg-[#2a2a2f]'}`}>
+                    <span class={`font-mono font-bold text-sm w-9 h-9 shrink-0 rounded-lg grid place-items-center ${status === 'prevu' ? 'text-gray-400 border border-dashed border-gray-300 dark:border-white/20' : 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20'}`}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <div>
+                      <div class="flex flex-wrap items-center gap-2 mb-1">
+                        <h3 class="font-semibold text-gray-900 dark:text-white">{title}</h3>
+                        <Badge kind={status} />
+                      </div>
+                      <p class="text-sm text-gray-600 dark:text-gray-400">{text}</p>
+                    </div>
+                  </li>
+                ))
+              }
+            </ol>
+          </Panel>
+        </div>
+
+        <div slot="illustration">
+          <Panel title="Forme d'une sortie pseudonymisée" icon="table">
+            <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-white/10">
+              <table class="w-full text-sm">
+                <caption class="sr-only">Exemple fictif de sortie pseudonymisée</caption>
+                <thead class="bg-gray-50 dark:bg-[#2a2a2f] text-left text-[10px] uppercase tracking-wider text-gray-500">
+                  <tr><th scope="col" class="px-4 py-3">Identifiant</th><th scope="col" class="px-4 py-3">Clic</th><th scope="col" class="px-4 py-3">Client</th><th scope="col" class="px-4 py-3">Repérage</th></tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 dark:divide-white/5">
+                  {
+                    sample.map(([id, t, c, f, k]) => (
+                      <tr class="text-gray-700 dark:text-gray-300">
+                        <td class="px-4 py-3 font-mono whitespace-nowrap">{id}</td>
+                        <td class="px-4 py-3 font-mono whitespace-nowrap">{t}</td>
+                        <td class="px-4 py-3 whitespace-nowrap">{c}</td>
+                        <td class="px-4 py-3 whitespace-nowrap"><Badge kind={k === 'ok' ? 'fait' : 'en-cours'} label={f} /></td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </div>
+            <p class="text-xs text-gray-500 mt-3 flex gap-2"><Icon name="info" class="w-4 h-4 shrink-0 text-cyan-500" />Données entièrement fictives. Aucune donnée réelle de la campagne n'est publiée.</p>
+          </Panel>
+        </div>
+
+        <div slot="bilan">
+          <Panel title="Outils & compétences" icon="graduation">
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="text-[10px] uppercase font-bold tracking-wider bg-cyan-500/5 text-cyan-700 dark:text-cyan-300 px-2 py-1 rounded border border-cyan-500/10">Python</span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              {['Analyse de données', 'Détection de comportements suspects', 'Pseudonymisation', 'Scripting Python', 'Documentation'].map((t) => <Badge kind="neutre" label={t} />)}
+            </div>
+          </Panel>
+          <div class="flex gap-4 p-5 rounded-lg border border-amber-500/30 bg-amber-500/5 text-sm text-gray-700 dark:text-gray-300" data-reveal>
+            <Icon name="lock" class="w-5 h-5 text-amber-500 shrink-0 mt-0.5" />
+            <p><strong class="text-gray-900 dark:text-white">Confidentialité.</strong> Aucune donnée de campagne, adresse IP, identité, capture ou détail technique interne n'est publié. Seuls les objectifs, les méthodes générales, les outils et les compétences sont présentés.</p>
+          </div>
+        </div>
+      </Tabs>
+    </div>
+  </div>
+</Base>

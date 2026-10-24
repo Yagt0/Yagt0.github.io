@@ -1,0 +1,105 @@
+---
+import Base from '../../layouts/Base.astro';
+import DetailHeader from '../../components/DetailHeader.astro';
+import Panel from '../../components/Panel.astro';
+import MiniCard from '../../components/MiniCard.astro';
+import Tabs from '../../components/Tabs.astro';
+import Badge from '../../components/Badge.astro';
+import Icon from '../../components/Icon.astro';
+import { links } from '../../data/site';
+
+const li = 'text-cyan-600 dark:text-cyan-400';
+---
+
+<Base title="PassForge, générateur de mots de passe" description="PassForge, projet personnel d'Ewan Lefevre : générateur de mots de passe en Python, en ligne de commande, avec estimation de robustesse.">
+  <div class="min-h-screen pt-24 pb-20 bg-background transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-6 py-12">
+      <DetailHeader back={{ href: '/projets/', label: 'Lab & Projets' }} title="PassForge" subtitle="Générateur de mots de passe local, en ligne de commande, écrit en Python">
+        <Badge kind="perso" />
+        <Badge kind="en-cours" label="Fonctionnel, en amélioration" />
+        <Badge kind="neutre" label="Individuel" />
+      </DetailHeader>
+
+      {
+        links.passforgeRepo && (
+          <div class="flex justify-center -mt-6 mb-10">
+            <a href={links.passforgeRepo} target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white rounded-lg text-sm font-semibold transition-colors flex items-center gap-2 shadow-lg shadow-cyan-500/20">
+              <Icon name="github" class="w-4 h-4" /> Code sur GitHub
+            </a>
+          </div>
+        )
+      }
+
+      <Panel class="mb-12">
+        <div class="flex items-center gap-3 mb-4">
+          <Icon name="key" class="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Pourquoi ce projet ?</h2>
+        </div>
+        <div class="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
+          <p>
+            PassForge est un projet personnel réalisé pour apprendre : générer des mots de passe <strong class="text-gray-900 dark:text-white">en ligne de commande</strong>, avec une interface de terminal personnalisée, et progresser en Python sur un cas concret.
+          </p>
+          <p>
+            Ce n'est <strong class="text-gray-900 dark:text-white">ni un produit audité, ni un gestionnaire de mots de passe</strong>. Le projet fonctionne ; il doit encore être amélioré et sécurisé avant toute publication du code.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          <MiniCard title="Objectif" icon="target">Un générateur simple, local et paramétrable, utilisable depuis le terminal.</MiniCard>
+          <MiniCard title="Technologies" icon="code">
+            <ul>
+              <li><span class={li}>▹</span>Python</li>
+              <li><span class={li}>▹</span>Interface terminal (CLI)</li>
+            </ul>
+          </MiniCard>
+          <MiniCard title="État" icon="info">Fonctionnel. Dépôt GitHub pas encore publié : le lien sera ajouté ici.</MiniCard>
+        </div>
+      </Panel>
+
+      <Tabs
+        id="passforge"
+        tabs={[
+          { slot: 'apercu', label: 'Aperçu', icon: 'terminal' },
+          { slot: 'fonctions', label: 'Fonctionnalités', icon: 'check' },
+          { slot: 'choix', label: 'Choix & apprentissages', icon: 'sparkles' },
+        ]}
+      >
+        <div slot="apercu">
+          <Panel title="Capture réelle" icon="terminal">
+            <div class="rounded-lg overflow-hidden border border-gray-200 dark:border-white/10 bg-[#0c0c0c]">
+              <img src="/images/projets/passforge.webp" width="1512" height="821" loading="lazy" class="w-full h-auto" alt="PassForge dans un terminal : bannière, menu principal, choix de la longueur et des jeux de caractères, mot de passe généré de 24 caractères estimé très fort (155 bits), puis proposition de copie dans le presse-papiers." />
+            </div>
+            <p class="text-xs text-gray-500 mt-3">PassForge lancé avec <code class="text-cyan-600 dark:text-cyan-400">python main.py</code>.</p>
+          </Panel>
+        </div>
+
+        <div slot="fonctions">
+          <Panel title="Fonctionnalités" icon="check">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <MiniCard title="Menu en terminal" icon="terminal">Bannière, menu principal (générer, historique, à propos, quitter) et couleurs.</MiniCard>
+              <MiniCard title="Génération paramétrable" icon="key">Longueur au choix (24 par défaut), minuscules, majuscules, chiffres et symboles activables.</MiniCard>
+              <MiniCard title="Robustesse estimée" icon="chart">Affichage d'une robustesse théorique en bits, avec ses limites.</MiniCard>
+              <MiniCard title="Copie optionnelle" icon="copy">Copie dans le presse-papiers proposée après génération, refusée par défaut.</MiniCard>
+            </div>
+          </Panel>
+        </div>
+
+        <div slot="choix">
+          <Panel title="Choix techniques" icon="sparkles">
+            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+              <li class="flex items-start gap-2"><Icon name="chevronRight" class="w-4 h-4 text-cyan-500 mt-1 shrink-0" /><span><strong class="text-gray-900 dark:text-white">Local :</strong> l'outil fonctionne depuis le terminal, sans service en ligne.</span></li>
+              <li class="flex items-start gap-2"><Icon name="chevronRight" class="w-4 h-4 text-cyan-500 mt-1 shrink-0" /><span><strong class="text-gray-900 dark:text-white">Copie volontaire :</strong> rien n'est mis dans le presse-papiers sans demande.</span></li>
+              <li class="flex items-start gap-2"><Icon name="chevronRight" class="w-4 h-4 text-cyan-500 mt-1 shrink-0" /><span><strong class="text-gray-900 dark:text-white">Estimation honnête :</strong> l'outil précise qu'elle ne protège ni contre la réutilisation, ni contre le hameçonnage, ni contre un keylogger.</span></li>
+            </ul>
+          </Panel>
+          <Panel title="Apprentissages" icon="graduation">
+            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+              {['Structurer une application Python en ligne de commande avec un menu', "Gérer les saisies de l'utilisateur et les valeurs par défaut", "Relier longueur et jeux de caractères à une entropie en bits", "Présenter les limites d'un outil de sécurité sans les cacher"].map((t) => (
+                <li class="flex items-start gap-2"><Icon name="check" class="w-4 h-4 text-green-500 mt-1 shrink-0" />{t}</li>
+              ))}
+            </ul>
+          </Panel>
+        </div>
+      </Tabs>
+    </div>
+  </div>
+</Base>

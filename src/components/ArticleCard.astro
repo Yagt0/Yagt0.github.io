@@ -1,0 +1,58 @@
+---
+/* Carte d'article de veille, au format des cartes « Write-ups » de la référence. */
+import Icon from './Icon.astro';
+import Badge from './Badge.astro';
+import { sources, type Article } from '../data/veille';
+
+interface Props {
+  a: Article;
+  compact?: boolean;
+}
+const { a, compact = false } = Astro.props;
+const s = sources[a.source];
+const date = new Date(`${a.date}T12:00:00`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+---
+
+<article
+  data-reveal
+  data-source={a.source}
+  class="group relative bg-surface dark:bg-[#1a1a1f] rounded-2xl border border-gray-200 dark:border-white/5 overflow-hidden flex flex-col h-full shadow-sm dark:shadow-none transition-all duration-300 hover:border-cyan-500/30 hover:-translate-y-1"
+>
+  <div class:list={['relative h-40 overflow-hidden', s.fit === 'contain' ? 'bg-white' : 'bg-black']}>
+    <img
+      src={s.logo}
+      alt=""
+      loading="lazy"
+      class:list={['w-full h-full transition-transform duration-700 group-hover:scale-110', s.fit === 'contain' ? 'object-contain p-6' : 'object-cover']}
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-surface dark:from-[#1a1a1f] via-surface/30 dark:via-[#1a1a1f]/30 to-transparent"></div>
+    <div class="absolute top-4 left-4">
+      <span class="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-lg text-xs font-bold text-white shadow-xl">{s.name}</span>
+    </div>
+  </div>
+  <div class="p-6 pt-2 flex-1 flex flex-col">
+    <div class="flex justify-between items-start mb-4 gap-2">
+      <span class="flex items-center gap-1 text-xs text-gray-500"><Icon name="calendar" class="w-3 h-3" /><time datetime={a.date}>{date}</time></span>
+      <Badge kind={a.status} />
+    </div>
+    <h3 class="text-base font-bold text-gray-900 dark:text-white mb-3 leading-snug group-hover:text-cyan-600 dark:group-hover:text-cyan-400 transition-colors">
+      <a href={a.url} target="_blank" rel="noopener noreferrer" class="after:absolute after:inset-0">{a.title}</a>
+    </h3>
+    <p class:list={['text-gray-600 dark:text-gray-400 text-sm mb-4 leading-relaxed', compact ? 'line-clamp-3' : '']}>{a.summary}</p>
+    {
+      !compact && (
+        <p class="text-xs leading-relaxed mb-6 p-3 rounded-lg bg-cyan-500/5 border border-cyan-500/10 text-gray-600 dark:text-gray-400">
+          <strong class="text-cyan-700 dark:text-cyan-400">Intérêt infra :</strong> {a.interest}
+        </p>
+      )
+    }
+    <div class="mt-auto flex items-center justify-between border-t border-gray-200 dark:border-white/5 pt-4 gap-2">
+      <div class="flex flex-wrap gap-1.5">
+        {a.topics.slice(0, compact ? 2 : 3).map((t) => <span class="text-[10px] text-gray-500 flex items-center gap-1"><Icon name="star" class="w-3 h-3 text-cyan-500/50" />{t}</span>)}
+      </div>
+      <span class="flex items-center gap-2 text-xs font-bold text-cyan-600 dark:text-cyan-400 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0 shrink-0">
+        Lire <Icon name="external" class="w-3 h-3" />
+      </span>
+    </div>
+  </div>
+</article>

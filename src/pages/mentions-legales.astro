@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { profile, site } from '../data/site';
+
+const updated = new Date(`${site.updated}T12:00:00`).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+const blocks = [
+  {
+    icon: 'user',
+    title: 'Éditeur du site',
+    html: `Ce site est un portfolio personnel, édité à titre non professionnel par <strong>Ewan Lefevre</strong>, directeur de la publication.<br />Contact : <a href="mailto:${profile.email}">${profile.email}</a>`,
+  },
+  {
+    icon: 'server',
+    title: 'Hébergement',
+    html: 'Hébergé par <strong>GitHub, Inc.</strong> (service GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. <a href="https://pages.github.com/" target="_blank" rel="noopener">pages.github.com</a>',
+  },
+  {
+    icon: 'lock',
+    title: 'Données personnelles & cookies',
+    html: "Le site ne dépose aucun cookie, n'utilise aucun outil de mesure d'audience et ne collecte aucune donnée par formulaire. Les polices sont hébergées sur le site. Le thème choisi (sombre ou clair) est seulement mémorisé dans votre navigateur.<br /><br />Comme tout hébergeur, GitHub peut enregistrer des données techniques de connexion (adresse IP) pour la sécurité du service : voir la <a href=\"https://docs.github.com/fr/site-policy/privacy-policies/github-general-privacy-statement\" target=\"_blank\" rel=\"noopener\">déclaration de confidentialité de GitHub</a>. Si vous m'écrivez par e-mail, votre message sert uniquement à vous répondre.",
+  },
+  {
+    icon: 'shield',
+    title: 'Propriété intellectuelle',
+    html: "Les textes et contenus du site appartiennent à Ewan Lefevre, sauf mention contraire. Les logos et marques cités (SERVAIR, CERT-FR, The Hacker News, Krebs on Security, Dark Reading, Root-Me, TryHackMe, Cisco) appartiennent à leurs propriétaires et ne servent qu'à identifier les organisations et sources mentionnées.",
+  },
+  {
+    icon: 'external',
+    title: 'Liens externes',
+    html: "Le site contient des liens vers des sites tiers, dont le contenu ne relève pas de la responsabilité de l'éditeur.",
+  },
+  {
+    icon: 'briefcase',
+    title: 'Confidentialité des missions',
+    html: 'Les missions professionnelles sont présentées sans aucune information confidentielle : ni nom de salarié, ni donnée individuelle, ni export interne, ni adresse IP, ni identifiant.',
+  },
+];
+---
+
+<Base title="Mentions Légales" description="Mentions légales du portfolio personnel d'Ewan Lefevre, hébergé sur GitHub Pages.">
+  <div class="min-h-screen pt-32 pb-24 bg-background transition-colors duration-300">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="text-center mb-12 space-y-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">Mentions Légales</h1>
+        <p class="text-gray-500 font-mono text-sm">Dernière mise à jour : {updated}</p>
+      </div>
+      <div class="space-y-6">
+        {
+          blocks.map((b) => (
+            <section data-reveal class="bg-surface dark:bg-[#1a1a1f] p-6 md:p-8 rounded-2xl border border-gray-200 dark:border-white/5 shadow-sm dark:shadow-none">
+              <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-3">
+                <span class="p-2 bg-cyan-500/10 rounded-lg border border-cyan-500/20">
+                  <Icon name={b.icon as 'user'} class="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                </span>
+                {b.title}
+              </h2>
+              <p class="text-sm text-gray-600 dark:text-gray-400 leading-relaxed [&_strong]:text-gray-900 dark:[&_strong]:text-white [&_a]:text-cyan-600 dark:[&_a]:text-cyan-400 [&_a]:underline [&_a]:underline-offset-2" set:html={b.html} />
+            </section>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</Base>

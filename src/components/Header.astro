@@ -1,0 +1,208 @@
+---
+import Icon from './Icon.astro';
+import { nav, profile, links } from '../data/site';
+
+const path = Astro.url.pathname;
+const active = (href: string, match?: string[]) => (match ?? [href]).some((p) => path.startsWith(p));
+const linkCls = (on: boolean) =>
+  `px-3 py-2 text-sm uppercase tracking-wider hover:text-cyan-400 transition-colors rounded-lg hover:bg-surface/50 ${
+    on ? 'text-cyan-500 font-semibold' : 'text-gray-500 dark:text-gray-400'
+  }`;
+const mobileCls =
+  'flex items-center justify-center gap-2 text-xl font-medium uppercase tracking-wider text-center py-4 border-b border-gray-200 dark:border-white/5 hover:text-cyan-400';
+const veilleOn = path.startsWith(nav.veille.href);
+---
+
+<header
+  data-header
+  class="fixed top-0 w-full z-50 transition-all duration-300 border-b bg-transparent border-transparent py-5"
+>
+  <nav class="container mx-auto px-6" aria-label="Navigation principale">
+    <div class="flex items-center justify-between relative z-50">
+      <a href="/" class="flex items-center space-x-2 group" aria-label="Retour à l'accueil">
+        <div class="p-2 bg-cyan-500/10 rounded-lg group-hover:bg-cyan-500/20 transition-colors border border-cyan-500/20">
+          <Icon name="laptop" class="w-6 h-6 text-cyan-500 transition-transform duration-300 group-hover:-rotate-12" />
+        </div>
+        <div class="hidden sm:flex flex-col items-start">
+          <span class="text-lg font-bold tracking-widest font-mono group-hover:text-cyan-400 transition-colors text-text">YAGT0</span>
+        </div>
+      </a>
+
+      <!-- Mobile -->
+      <div class="flex items-center gap-2 xl:hidden">
+        <button
+          type="button"
+          data-theme-toggle
+          class="p-2 rounded-lg bg-surface/50 border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400"
+          aria-label="Changer de thème"
+        >
+          <Icon name="sun" class="w-5 h-5 hidden dark:block" />
+          <Icon name="moon" class="w-5 h-5 dark:hidden" />
+        </button>
+        <button
+          type="button"
+          data-menu-toggle
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          class="p-2 text-gray-500 dark:text-gray-400 hover:text-text transition-colors rounded-lg hover:bg-surface/50"
+          aria-label="Ouvrir le menu"
+        >
+          <span data-menu-open><Icon name="menu" class="w-6 h-6" /></span>
+          <span data-menu-close class="hidden"><Icon name="close" class="w-6 h-6" /></span>
+        </button>
+      </div>
+
+      <!-- Desktop -->
+      <div class="hidden xl:flex items-center justify-center space-x-3">
+        {
+          nav.before.map((item) => (
+            <a href={item.href} class={linkCls(active(item.href, item.match))} aria-current={active(item.href, item.match) ? 'page' : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+
+        <a href={nav.veille.href} class="group relative flex items-center justify-center mx-1" aria-current={veilleOn ? 'page' : undefined}>
+          <div class="absolute inset-0 bg-cyan-500 rounded-full blur opacity-10 group-hover:opacity-30 motion-safe:animate-pulse transition-opacity"></div>
+          <div
+            class:list={[
+              'relative px-3 py-1.5 rounded-full flex items-center gap-2 border transition-all duration-300',
+              veilleOn
+                ? 'bg-surface border-cyan-500 text-cyan-500 dark:text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                : 'bg-surface/50 border-gray-200 dark:border-cyan-500/20 text-gray-500 dark:text-gray-400 hover:text-cyan-500 dark:hover:text-cyan-300 hover:border-cyan-500/50',
+            ]}
+          >
+            <Icon name="rss" class={`w-3.5 h-3.5 ${veilleOn ? 'text-cyan-500 dark:text-cyan-400' : 'text-gray-400 group-hover:text-cyan-400'} transition-colors`} />
+            <span class="text-[11px] font-bold tracking-wider uppercase">{nav.veille.label}</span>
+            <Icon name="sparkles" class="w-2.5 h-2.5 text-yellow-500 dark:text-yellow-300 motion-safe:animate-pulse" />
+          </div>
+        </a>
+
+        <a
+          href={profile.cv}
+          download
+          class="mx-2 flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-cyan-600 to-cyan-500 text-white rounded-full hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 border border-white/10 transform hover:scale-105"
+        >
+          <span class="w-6 h-6 rounded-full border border-white/30 grid place-items-center bg-white/10">
+            <Icon name="download" class="w-3.5 h-3.5" />
+          </span>
+          <span class="font-semibold text-sm">Mon CV</span>
+        </a>
+
+        {
+          nav.after.map((item) => (
+            <a href={item.href} class={`flex items-center gap-2 ${linkCls(active(item.href))}`} aria-current={active(item.href) ? 'page' : undefined}>
+              {item.icon && <Icon name={item.icon as 'award'} class="w-4 h-4" />}
+              <span>{item.label}</span>
+            </a>
+          ))
+        }
+
+        <button
+          type="button"
+          data-theme-toggle
+          class="p-2 rounded-lg bg-surface border border-gray-200 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-cyan-500 hover:border-cyan-500 transition-all active:scale-95"
+          aria-label="Changer de thème"
+        >
+          <Icon name="sun" class="w-5 h-5 hidden dark:block" />
+          <Icon name="moon" class="w-5 h-5 dark:hidden" />
+        </button>
+
+        <a href="/contact/" class={linkCls(active('/contact/'))} aria-current={active('/contact/') ? 'page' : undefined}>Contact</a>
+      </div>
+
+      <div class="hidden 2xl:flex items-center space-x-3 pl-4 border-l border-gray-200 dark:border-white/10 ml-4">
+        <a href={links.github} target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-text hover:bg-surface/50 p-2.5 rounded-lg transition-all" aria-label="Mon GitHub">
+          <Icon name="github" class="w-6 h-6" />
+        </a>
+        <a href={links.linkedin} target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-500 hover:bg-surface/50 p-2.5 rounded-lg transition-all" aria-label="Mon LinkedIn">
+          <Icon name="linkedin" class="w-6 h-6" />
+        </a>
+        <a href={`mailto:${profile.email}`} class="text-gray-400 hover:text-red-500 hover:bg-surface/50 p-2.5 rounded-lg transition-all" aria-label="M'envoyer un e-mail">
+          <Icon name="mail" class="w-6 h-6" />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Menu mobile plein écran -->
+  <div id="mobile-menu" hidden class="fixed inset-0 bg-background z-40 xl:hidden pt-24 px-6 overflow-y-auto">
+    <div class="flex flex-col min-h-full pb-10">
+      <div class="mb-8">
+        <a
+          href={profile.cv}
+          download
+          class="w-full bg-cyan-500 text-white px-6 py-4 rounded-xl hover:bg-cyan-600 transition-all active:scale-95 flex items-center justify-center gap-3 shadow-lg shadow-cyan-500/20"
+        >
+          <Icon name="download" class="w-6 h-6" />
+          <span class="font-bold text-lg">Télécharger mon CV</span>
+        </a>
+      </div>
+      <div class="flex flex-col space-y-2 mb-auto">
+        <a href="/" class={`${mobileCls} ${path === '/' ? 'text-cyan-500' : 'text-gray-500 dark:text-gray-400'}`}>Accueil</a>
+        {
+          nav.before.map((item) => (
+            <a href={item.href} class={`${mobileCls} ${active(item.href, item.match) ? 'text-cyan-500' : 'text-gray-500 dark:text-gray-400'}`}>
+              {item.label}
+            </a>
+          ))
+        }
+        <a href={nav.veille.href} class={`${mobileCls} ${veilleOn ? 'text-cyan-500' : 'text-gray-500 dark:text-gray-400'}`}>
+          <Icon name="rss" class="w-5 h-5" />
+          {nav.veille.label}
+          <Icon name="sparkles" class="w-4 h-4 text-yellow-500" />
+        </a>
+        {
+          nav.after.map((item) => (
+            <a href={item.href} class={`${mobileCls} ${active(item.href) ? 'text-cyan-500' : 'text-gray-500 dark:text-gray-400'}`}>
+              {item.icon && <Icon name={item.icon as 'award'} class="w-5 h-5" />}
+              {item.label}
+            </a>
+          ))
+        }
+        <a href="/contact/" class={`${mobileCls} border-b-0 ${active('/contact/') ? 'text-cyan-500' : 'text-gray-500 dark:text-gray-400'}`}>Contact</a>
+      </div>
+      <div class="flex items-center justify-center gap-6 mt-8">
+        <a href={links.github} target="_blank" rel="noopener noreferrer" class="p-4 bg-surface rounded-full text-gray-500 dark:text-gray-400 hover:text-white hover:bg-cyan-600 transition-all border border-gray-200 dark:border-white/5" aria-label="GitHub">
+          <Icon name="github" class="w-6 h-6" />
+        </a>
+        <a href={links.linkedin} target="_blank" rel="noopener noreferrer" class="p-4 bg-surface rounded-full text-gray-500 dark:text-gray-400 hover:text-white hover:bg-blue-600 transition-all border border-gray-200 dark:border-white/5" aria-label="LinkedIn">
+          <Icon name="linkedin" class="w-6 h-6" />
+        </a>
+        <a href={`mailto:${profile.email}`} class="p-4 bg-surface rounded-full text-gray-500 dark:text-gray-400 hover:text-white hover:bg-red-500 transition-all border border-gray-200 dark:border-white/5" aria-label="E-mail">
+          <Icon name="mail" class="w-6 h-6" />
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('mobile-menu');
+  const scrolledCls = ['bg-background/90', 'backdrop-blur-md', 'border-gray-200/50', 'dark:border-cyan-900/30', 'shadow-sm', 'dark:shadow-none', 'py-3'];
+
+  const onScroll = () => {
+    const s = window.scrollY > 20;
+    scrolledCls.forEach((c) => header.classList.toggle(c, s));
+    header.classList.toggle('py-5', !s);
+    header.classList.toggle('bg-transparent', !s);
+    header.classList.toggle('border-transparent', !s);
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const setMenu = (open: boolean) => {
+    if (!toggle || !menu) return;
+    menu.hidden = !open;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+    toggle.querySelector('[data-menu-open]')?.classList.toggle('hidden', open);
+    toggle.querySelector('[data-menu-close]')?.classList.toggle('hidden', !open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  toggle?.addEventListener('click', () => setMenu(menu?.hidden ?? true));
+  document.addEventListener('keydown', (e) => e.key === 'Escape' && menu && !menu.hidden && setMenu(false));
+  window.matchMedia('(min-width: 1280px)').addEventListener('change', (e) => e.matches && setMenu(false));
+</script>

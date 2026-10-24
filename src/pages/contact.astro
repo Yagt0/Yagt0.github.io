@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactSection from '../components/home/ContactSection.astro';
+import Icon from '../components/Icon.astro';
+import { links } from '../data/site';
+
+const profiles = [
+  { href: links.github, icon: 'github', name: 'GitHub', handle: 'Yagt0', color: 'hover:border-purple-500/40', iconCls: 'text-purple-500' },
+  { href: links.linkedin, icon: 'linkedin', name: 'LinkedIn', handle: 'ewan-lefevre', color: 'hover:border-blue-500/40', iconCls: 'text-blue-500' },
+  { href: links.rootme, icon: 'trophy', name: 'Root-Me', handle: 'Yagto', color: 'hover:border-[#e74c3c]/40', iconCls: 'text-[#e74c3c]' },
+  { href: links.tryhackme, icon: 'target', name: 'TryHackMe', handle: 'Y4gt0', color: 'hover:border-[#FF4141]/40', iconCls: 'text-[#FF4141]' },
+] as const;
+---
+
+<Base title="Contact & CV" description="Contacter Ewan Lefevre par e-mail, LinkedIn ou Discord, et télécharger son CV au format PDF.">
+  <ContactSection asPage />
+  <section class="pb-24 bg-background">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2"><span class="w-1 h-6 bg-cyan-500 rounded-full"></span>Profils techniques</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        {
+          profiles.map((p) => (
+            <a href={p.href} target="_blank" rel="noopener noreferrer" data-reveal class={`group flex items-center gap-4 p-4 rounded-2xl bg-surface dark:bg-[#1a1a1f] border border-gray-200 dark:border-white/5 ${p.color} hover:-translate-y-1 transition-all duration-300 shadow-sm dark:shadow-none`}>
+              <span class="p-3 rounded-xl bg-gray-50 dark:bg-black border border-gray-200 dark:border-white/5">
+                <Icon name={p.icon} class={`w-5 h-5 ${p.iconCls}`} />
+              </span>
+              <span class="min-w-0">
+                <span class="block font-bold text-gray-900 dark:text-white">{p.name}</span>
+                <span class="block text-xs font-mono text-gray-500 truncate">{p.handle}</span>
+              </span>
+              <Icon name="external" class="w-4 h-4 text-gray-400 ml-auto shrink-0" />
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>

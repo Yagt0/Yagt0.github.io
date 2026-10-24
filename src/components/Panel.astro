@@ -1,0 +1,23 @@
+---
+/* Bloc de contenu des fiches (carte #1a1a1f bordée cyan sombre, titre cyan), comme la page projet de la référence. */
+import Icon from './Icon.astro';
+
+interface Props {
+  title?: string;
+  icon?: string;
+  class?: string;
+}
+const { title, icon, class: cls } = Astro.props;
+---
+
+<div class:list={['bg-surface dark:bg-[#1a1a1f] p-6 rounded-lg border border-gray-200 dark:border-cyan-900/20 shadow-sm dark:shadow-none', cls]} data-reveal>
+  {
+    title && (
+      <h2 class="text-xl font-semibold text-cyan-700 dark:text-cyan-400 mb-6 flex items-center gap-2">
+        {icon && <Icon name={icon as 'home'} class="w-5 h-5" />}
+        {title}
+      </h2>
+    )
+  }
+  <slot />
+</div>

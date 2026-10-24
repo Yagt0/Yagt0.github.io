@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ScrollMenu from '../components/ScrollMenu.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Hero from '../components/home/Hero.astro';
+import Stats from '../components/home/Stats.astro';
+import Formation from '../components/home/Formation.astro';
+import Timeline from '../components/home/Timeline.astro';
+import ContactSection from '../components/home/ContactSection.astro';
+import { realisations } from '../data/realisations';
+import { articles } from '../data/veille';
+
+// Les 3 articles les plus récents, d'une source différente chacun.
+const latest = [...articles]
+  .sort((a, b) => b.date.localeCompare(a.date))
+  .filter((a, i, all) => all.findIndex((b) => b.source === a.source) === i)
+  .slice(0, 3);
+const menu = [
+  { id: 'home', label: 'Accueil', icon: 'home' },
+  { id: 'stats', label: 'Stats', icon: 'chart' },
+  { id: 'formation', label: 'Formation', icon: 'book' },
+  { id: 'parcours', label: 'Trajectoire', icon: 'activity' },
+  { id: 'projects', label: 'Projets', icon: 'folder' },
+  { id: 'veille', label: 'Veille', icon: 'rss' },
+  { id: 'contact', label: 'Contact', icon: 'mail' },
+];
+const button =
+  'group flex items-center gap-2 text-sm font-medium bg-surface dark:bg-[#1a1a1f] text-gray-700 dark:text-gray-300 px-5 py-3 rounded-xl border border-gray-200 dark:border-white/10 hover:border-cyan-500/50 hover:text-cyan-600 dark:hover:text-white transition-all duration-300 shadow-sm dark:shadow-none';
+---
+
+<Base>
+  <ScrollMenu slot="fixed" items={menu} />
+  <Hero />
+  <Stats />
+  <Formation />
+  <Timeline />
+
+  <section id="projects" class="py-24 bg-background transition-colors duration-300 relative overflow-hidden scroll-mt-16">
+    <div class="container mx-auto px-6 relative z-10">
+      <SectionTitle title="Lab & Projets" icon="folder" subtitle="Une mission professionnelle, un projet BTS et un projet perso : contexte, rôle, réalisé et prévu, tout est détaillé.">
+        <a href="/projets/" class={button}>
+          <span>Voir tous les projets</span>
+          <Icon name="arrowRight" class="w-4 h-4 transform transition-transform group-hover:translate-x-1" />
+        </a>
+      </SectionTitle>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {realisations.map((item) => <ProjectCard item={item} />)}
+      </div>
+    </div>
+  </section>
+
+  <section id="veille" class="py-24 bg-background transition-colors duration-300 relative scroll-mt-16">
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="flex flex-col md:flex-row items-center justify-between mb-12 gap-6">
+        <div class="flex items-center gap-3">
+          <div class="p-3 bg-surface dark:bg-[#1a1a1f] rounded-xl border border-gray-200 dark:border-white/10 shadow-sm dark:shadow-none">
+            <Icon name="rss" class="w-8 h-8 text-cyan-600 dark:text-cyan-500" />
+          </div>
+          <div>
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Veille Technologique</h2>
+            <p class="text-gray-600 dark:text-gray-500 text-sm mt-1">Sécurité des infrastructures : vulnérabilités, menaces et protections</p>
+          </div>
+        </div>
+        <a href="/veille/" class={button}>
+          <span>Toute la veille</span>
+          <Icon name="arrowRight" class="w-4 h-4 transform transition-transform group-hover:translate-x-1" />
+        </a>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {latest.map((a) => <ArticleCard a={a} compact />)}
+      </div>
+    </div>
+  </section>
+
+  <ContactSection />
+</Base>

@@ -1,0 +1,25 @@
+---
+/* En-tête des fiches détaillées (modèle « page projet » de la référence) : titre dégradé cyan + sous-titre + badges. */
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  back: { href: string; label: string };
+}
+const { title, subtitle, back } = Astro.props;
+---
+
+<div class="mb-12">
+  <a href={back.href} class="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-cyan-500 transition-colors mb-8">
+    <Icon name="arrowLeft" class="w-4 h-4" />
+    {back.label}
+  </a>
+  <div class="text-center space-y-4">
+    <h1 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 to-cyan-600 bg-clip-text text-transparent">{title}</h1>
+    <p class="text-lg md:text-xl text-gray-600 dark:text-gray-400">{subtitle}</p>
+    <div class="flex flex-wrap justify-center gap-2 pt-2">
+      <slot />
+    </div>
+  </div>
+</div>
