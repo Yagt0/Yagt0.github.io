@@ -10,9 +10,9 @@ export const tryhackme = {
   handle: 'Y4gt0',
   rank: 'Top 25%',
   level: '0x5 · Visionary',
-  rooms: 11,
+  rooms: 16,
   badges: 3,
-  challenges: 2,
+  challenges: 7,
   topics: ['Linux', 'Offensive Security', 'Defensive Security', 'Wi-Fi', 'Reverse Engineering'],
 };
 

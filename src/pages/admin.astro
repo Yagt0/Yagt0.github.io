@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+const logs = [
+  ['GET', '/admin/', '403', 'accès refusé'],
+  ['GET', '/admin/login', '404', 'introuvable'],
+  ['GET', '/vault.txt', '200', 'rien à voir ici (vraiment ?)'],
+];
+---
+
+<Base title="Zone restreinte" description="Page d'administration factice du portfolio, créée pour les curieux." noindex>
+  <div class="min-h-[80vh] pt-32 pb-24 flex items-center justify-center bg-background relative overflow-hidden">
+    <div class="absolute inset-0 bg-[linear-gradient(rgba(239,68,68,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(239,68,68,0.04)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]"></div>
+    <div class="relative w-full max-w-2xl mx-6 rounded-2xl border border-red-500/30 bg-surface dark:bg-[#1a0f12] p-8 shadow-[0_0_40px_rgba(239,68,68,0.08)]">
+      <div class="flex items-center gap-4 mb-6">
+        <div class="p-3 rounded-xl bg-red-500/10 border border-red-500/30"><Icon name="shield" class="w-7 h-7 text-red-500" /></div>
+        <div>
+          <h1 class="text-xl md:text-2xl font-bold text-red-500 font-mono">ACCÈS REFUSÉ</h1>
+          <p class="text-xs text-red-400/70 font-mono">Zone d'administration : 403 Forbidden</p>
+        </div>
+      </div>
+
+      <div class="rounded-lg border border-red-500/20 bg-black/30 p-4 font-mono text-xs text-red-300/90 space-y-1.5 mb-6">
+        <p class="text-red-400 font-bold mb-2">&gt;_ journal (simulation)</p>
+        {logs.map(([m, path, code, note]) => <p><span class="text-gray-500">{m}</span> {path} <span class="text-red-400">{code}</span> <span class="text-gray-500">// {note}</span></p>)}
+      </div>
+
+      <p class="text-center text-lg font-bold text-gray-900 dark:text-white font-mono mb-2">Joli essai, mais il n'y a rien à pirater ici.</p>
+      <p class="text-center text-sm text-gray-600 dark:text-gray-400 mb-6">
+        Ce site est statique : pas de back-office, pas de base de données, et <strong>rien n'est enregistré sur toi</strong>. Cette page est un clin d'œil pour les curieux. Si tu aimes chercher, regarde aussi du côté des fichiers que les robots n'ont pas le droit de lire.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-3">
+        <a href="/" class="px-5 py-2.5 rounded-xl border border-red-500/30 text-red-400 text-sm font-mono hover:bg-red-500/10 transition-colors">Retour à la surface</a>
+        <a href="/contact/" class="px-5 py-2.5 rounded-xl border border-red-500/30 text-red-400 text-sm font-mono hover:bg-red-500/10 transition-colors">Envoyer un flag</a>
+      </div>
+    </div>
+  </div>
+  <!-- Indice : les robots ont des règles, les humains curieux aussi. -->
+</Base>

@@ -26,7 +26,7 @@ export const links = {
   rootme: 'https://www.root-me.org/Yagto?lang=fr#cda71a2d9a26ca2485fb0600b3ca38db',
   tryhackme: 'https://tryhackme.com/p/Y4gt0',
   /* Lien d'invitation ou de profil Discord : à renseigner quand il sera disponible. */
-  discord: 'yagto',
+  discord: null as string | null,
   /* Dépôt GitHub de PassForge : à renseigner quand il existera. */
   passforgeRepo: null as string | null,
   /* Tableau de synthèse E5 officiel, une fois rempli : déposer le PDF dans public/docs/ puis indiquer son chemin,

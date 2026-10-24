@@ -1,3 +1,4 @@
+
 # Portfolio d'Ewan Lefevre (Yagt0)
 
 Portfolio professionnel pour le BTS SIO SISR (épreuve E5), destiné à GitHub Pages : https://yagt0.github.io
@@ -44,14 +45,14 @@ Le dépôt `Yagt0.github.io` existe déjà avec l'ancien site. Pour le remplacer
 
 ## Structure
 
-```
+```text
 cv/                source du CV (cv.html) et script de génération du PDF
-public/            fichiers servis tels quels (CV, images, logos, favicon)
-src/data/          contenus modifiables (liens, veille, réalisations, stats)
-src/components/    en-tête, pied de page, cartes, icônes…
-src/layouts/       gabarit commun à toutes les pages
-src/pages/         une page = un fichier (l'adresse suit le nom du fichier)
-.github/workflows/ déploiement automatique sur GitHub Pages
+public/             fichiers servis tels quels (CV, images, logos, favicon)
+src/data/           contenus modifiables (liens, veille, réalisations, stats)
+src/components/     en-tête, pied de page, cartes, icônes…
+src/layouts/        gabarit commun à toutes les pages
+src/pages/          une page = un fichier (l'adresse suit le nom du fichier)
+.github/workflows/  déploiement automatique sur GitHub Pages
 ```
 
 ## À compléter ou vérifier

@@ -1,0 +1,7 @@
+Bravo, tu lis les robots.txt : c'est un bon réflexe de pentester.
+
+Ce que tu cherches est juste en dessous, encodé (indice : 64 caractères possibles).
+
+RVdBTntyb2JvdHNfdHh0X2lzX25vdF9hX3NlY3VyaXR5X2NvbnRyb2x9
+
+Une fois décodé, envoie le flag via la page contact : j'adore savoir qui est curieux.

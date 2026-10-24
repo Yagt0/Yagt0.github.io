@@ -1,0 +1,11 @@
+# robots.txt du portfolio d'Ewan Lefevre
+# Site : https://yagt0.github.io
+
+User-agent: *
+Allow: /
+
+# Zone d'administration (pas pour les curieux)
+Disallow: /admin/
+
+# TODO : retirer ce fichier avant la mise en prod
+Disallow: /vault.txt
